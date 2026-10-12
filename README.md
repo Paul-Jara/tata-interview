@@ -56,6 +56,6 @@ docker compose up -d --build cliente-service cuenta-service
 | Servicio | Puerto Host | Descripción | Enlace |
 | :--- | :--- | :--- | :--- |
 | **RabbitMQ Management** | `15672` | Consola de RabbitMQ (user/pass: `guest`/`guest`) | [http://localhost:15672](http://localhost:15672) |
-| **PostgreSQL** | `5432` | Base de datos (`tata` / `password`) | `localhost:5432` |
+| **PostgreSQL** | `5433` | Base de datos (`tata` / `password`) | `localhost:5433` |
 | **Customer Service** | `8080` | Swagger UI del servicio de clientes | [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) |
 | **Account Service** | `8081` | Swagger UI del servicio de cuentas | [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html) |

@@ -1,6 +1,7 @@
 package com.tata.accountservice.messaging;
 import com.tata.accountservice.model.ClientReplicaEntity;
 import com.tata.accountservice.repository.ClientReplicaRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;

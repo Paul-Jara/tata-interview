@@ -4,6 +4,7 @@ import com.tata.customerservice.dto.ClientDTO;
 import com.tata.customerservice.exception.NotAllowedException;
 import com.tata.customerservice.exception.NotFoundException;
 import com.tata.customerservice.mapper.ClientMapper;
+import com.tata.customerservice.messaging.ClientEventPublisher;
 import com.tata.customerservice.model.ClientEntity;
 import com.tata.customerservice.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +26,7 @@ public class ClientService {
 	
 	private final ClientRepository clientRepository;
 	private final ClientMapper clientMapper;
-
-	public void save(ClientDTO client) {
-		client.setStatus(Boolean.TRUE);
-		ClientEntity clientEntity = clientMapper.toEntity(client);
-		try {
-			clientRepository.save(clientEntity);
-		} catch (DataIntegrityViolationException e) {
-			log.error(String.format(IDENTIFICATION_DUPLICATED, client.getIdentification()));
-			log.error(e.getMessage());
-			throw new NotAllowedException(
-					String.format(IDENTIFICATION_DUPLICATED, client.getIdentification()));
-		}
-	}
+	private final ClientEventPublisher clientEventPublisher;
 
 	public ClientEntity getById(Long clientId) {
 		Optional<ClientEntity> client = clientRepository.findById(clientId);
@@ -63,6 +52,7 @@ public class ClientService {
 			throw new NotAllowedException(
 					String.format(IDENTIFICATION_DUPLICATED, client.getIdentification()));
 		}
+		clientEventPublisher.publishClientEvent(clientEntity);
 	}
 
 	public void delete(Long id) {
@@ -82,7 +72,7 @@ public class ClientService {
 		clientEntity.setPhone(clientDto.getPhone());
 		clientEntity.setStatus(clientDto.isStatus());
 		clientRepository.save(clientEntity);
-		
+		clientEventPublisher.publishClientEvent(clientEntity);
 	}
 
 	public List<ClientDTO> getAll() {
