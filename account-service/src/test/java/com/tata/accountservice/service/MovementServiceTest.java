@@ -6,6 +6,8 @@ import com.tata.accountservice.exception.NotAllowedException;
 import com.tata.accountservice.model.MovementEntity;
 import com.tata.accountservice.repository.MovementRepository;
 import com.tata.accountservice.types.MovementType;
+import io.github.resilience4j.retry.Retry;
+import io.github.resilience4j.retry.RetryRegistry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +27,9 @@ class MovementServiceTest {
 	
 	@Autowired
 	private MovementRepository movementRepository;
+
+	@Autowired
+	private RetryRegistry retryRegistry;
 	
 	/**
 	 *Los valores cuando son crédito son positivos, y los débitos son negativos. 
@@ -65,5 +70,12 @@ class MovementServiceTest {
 			 movementService.create(movement));
 		
 		assertEquals(MovementService.INSUFFICIENT_FUNDS, exception.getMessage());
+	}
+
+	@Test
+	void test_retry_configuration_max_attempts() {
+		Retry retry = retryRegistry.retry("movementCreation");
+		assertNotNull(retry);
+		assertEquals(3, retry.getRetryConfig().getMaxAttempts());
 	}
 }
