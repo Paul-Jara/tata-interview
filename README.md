@@ -1,6 +1,6 @@
 # Tata Interview - Microservicios
 
-Proyecto de arquitectura de microservicios basado en Spring Boot 3 / Java 21, RabbitMQ y PostgreSQL.
+Proyecto de arquitectura de microservicios basado en Spring Boot 4 / Java 21, RabbitMQ y PostgreSQL.
 
 ## Microservicios
 
