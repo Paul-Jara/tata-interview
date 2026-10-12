@@ -9,6 +9,7 @@ import com.tata.accountservice.model.AccountEntity;
 import com.tata.accountservice.model.MovementEntity;
 import com.tata.accountservice.repository.MovementRepository;
 import com.tata.accountservice.types.MovementType;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class MovementService {
 				.collect(Collectors.toList());
 	}
 
+	@Retry(name = "movementCreation")
 	@Transactional
 	public void create(final MovementDTO movementDto) {
 		final AccountEntity account =
