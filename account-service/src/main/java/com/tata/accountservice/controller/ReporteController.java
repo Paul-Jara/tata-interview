@@ -19,10 +19,7 @@ public class ReporteController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ReportDTO> getReport(
-            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam("cliente") Long client) {
-        return reportService.generateReport(startDate, endDate, client);
+    public List<ReportDTO> getReport(@RequestParam("fecha") String dateRange, @RequestParam("cliente") Long clientId) {
+        return reportService.generateReport(dateRange, clientId);
     }
 }

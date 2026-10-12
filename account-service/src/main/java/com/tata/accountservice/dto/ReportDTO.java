@@ -11,5 +11,5 @@ public class ReportDTO {
     private BigDecimal initialBalance;
     private Boolean status;
     private BigDecimal movement;
-    private BigDecimal availableBalance;
+    private BigDecimal currentBalance;
 }

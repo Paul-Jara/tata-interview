@@ -22,7 +22,7 @@ docker compose up -d --build
 Si realizas cambios en el código de los microservicios y no deseas reiniciar las bases de datos ni RabbitMQ:
 
 ```bash
-docker compose up -d --build cliente-service cuenta-service
+docker compose up -d --build customer-service account-service
 ```
 
 *(O de forma individual: `docker compose up -d --build cliente-service` o `docker compose up -d --build cuenta-service`)*

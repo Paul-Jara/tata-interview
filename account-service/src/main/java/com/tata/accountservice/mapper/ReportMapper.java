@@ -12,9 +12,9 @@ public interface ReportMapper {
     @Mapping(source = "clientName", target = "client")
     @Mapping(source = "account.accountNumber", target = "accountNumber")
     @Mapping(source = "account.accountType", target = "type")
-    @Mapping(source = "account.initialBalance", target = "initialBalance")
+    @Mapping(source = "movement.balance", target = "initialBalance")
     @Mapping(source = "account.status", target = "status")
     @Mapping(source = "movement.amount", target = "movement")
-    @Mapping(source = "movement.balance", target = "availableBalance")
+    @Mapping(source = "movement.balance", target = "currentBalance")
     ReportDTO toReportDTO(MovementEntity movement, AccountEntity account, String clientName);
 }

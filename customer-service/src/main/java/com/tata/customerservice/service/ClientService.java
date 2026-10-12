@@ -45,19 +45,20 @@ public class ClientService {
 		client.setStatus(Boolean.TRUE);
 		ClientEntity clientEntity = clientMapper.toEntity(client);
 		try {
-			clientRepository.save(clientEntity);
+			clientEntity = clientRepository.save(clientEntity);
 		} catch (DataIntegrityViolationException e) {
 			log.error(String.format(IDENTIFICATION_DUPLICATED, client.getIdentification()));
 			log.error(e.getMessage());
 			throw new NotAllowedException(
 					String.format(IDENTIFICATION_DUPLICATED, client.getIdentification()));
 		}
-		clientEventPublisher.publishClientEvent(clientEntity);
+		clientEventPublisher.publishClientEvent(clientEntity, "CREATE");
 	}
 
 	public void delete(Long id) {
 		ClientEntity client = getById(id);
 		clientRepository.delete(client);
+		clientEventPublisher.publishClientEvent(client, "DELETE");
 		
 	}
 
@@ -72,7 +73,7 @@ public class ClientService {
 		clientEntity.setPhone(clientDto.getPhone());
 		clientEntity.setStatus(clientDto.isStatus());
 		clientRepository.save(clientEntity);
-		clientEventPublisher.publishClientEvent(clientEntity);
+		clientEventPublisher.publishClientEvent(clientEntity, "UPDATE");
 	}
 
 	public List<ClientDTO> getAll() {

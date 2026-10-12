@@ -36,7 +36,7 @@ public class AccountEntity implements Serializable {
 
 	private Boolean status;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
 	@JoinColumn(name = "client_id", referencedColumnName = "client_id")
 	private ClientReplicaEntity client;
 
